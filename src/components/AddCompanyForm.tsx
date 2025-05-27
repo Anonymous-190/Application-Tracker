@@ -3,6 +3,8 @@ import { Plus, X, Building2, Globe, User, Briefcase } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Company } from '../pages/Index';
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 interface AddCompanyFormProps {
   onAdd: (company: Omit<Company, 'id'>) => void;
@@ -15,13 +17,14 @@ const AddCompanyForm: React.FC<AddCompanyFormProps> = ({ onAdd, onCancel }) => {
     website: '',
     role: '',
     linkedin: '',
+    status: 'applied',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.name.trim()) {
       onAdd(formData);
-      setFormData({ name: '', website: '', role: '', linkedin: '' });
+      setFormData({ name: '', website: '', role: '', linkedin: '', status: 'applied' });
     }
   };
 
@@ -109,6 +112,23 @@ const AddCompanyForm: React.FC<AddCompanyFormProps> = ({ onAdd, onCancel }) => {
             className="bg-background/50 border-0 ring-1 ring-border focus:ring-2 focus:ring-primary/20 rounded-xl h-12"
             placeholder="LinkedIn URL or username"
           />
+        </div>
+
+        {/* Status */}
+        <div className="space-y-2">
+          <Label className="text-sm font-medium text-foreground">Application Status</Label>
+          <RadioGroup
+            value={formData.status}
+            onValueChange={(value) => setFormData({ ...formData, status: value })}
+            className="flex gap-4 flex-wrap"
+          >
+            {['applied', 'coding round', 'interview', 'offer'].map((status) => (
+              <div key={status} className="flex items-center space-x-2">
+                <RadioGroupItem value={status} id={status} />
+                <Label htmlFor={status} className="capitalize">{status}</Label>
+              </div>
+            ))}
+          </RadioGroup>
         </div>
 
         {/* Action Buttons */}
