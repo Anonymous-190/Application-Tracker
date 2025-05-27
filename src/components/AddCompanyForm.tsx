@@ -1,6 +1,7 @@
-
 import React, { useState } from 'react';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Building2, Globe, User, Briefcase } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Company } from '../pages/Index';
 
 interface AddCompanyFormProps {
@@ -25,90 +26,115 @@ const AddCompanyForm: React.FC<AddCompanyFormProps> = ({ onAdd, onCancel }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto mb-8">
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">Add New Company</h3>
-          <button
-            onClick={onCancel}
-            className="text-gray-500 hover:text-gray-700 p-1 rounded transition-colors"
-          >
-            <X size={20} />
-          </button>
+    <div className="glass rounded-3xl p-8 border border-border/50 backdrop-blur-xl shadow-glow animate-scale-in">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center">
+            <Building2 className="w-7 h-7 text-white" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-foreground">Add New Company</h3>
+            <p className="text-muted-foreground">Track your next opportunity</p>
+          </div>
+        </div>
+        <Button
+          onClick={onCancel}
+          variant="ghost"
+          size="icon"
+          className="h-10 w-10 rounded-full hover:bg-destructive/10 hover:text-destructive"
+        >
+          <X className="w-5 h-5" />
+        </Button>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Company Name */}
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <Building2 className="w-4 h-4 text-primary" />
+            Company Name
+            <span className="text-destructive">*</span>
+          </label>
+          <Input
+            type="text"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="bg-background/50 border-0 ring-1 ring-border focus:ring-2 focus:ring-primary/20 rounded-xl h-12 text-lg"
+            placeholder="Enter company name"
+            required
+          />
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Company Name *
-            </label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-colors"
-              placeholder="Enter company name"
-              required
-            />
-          </div>
+        {/* Role/Position */}
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <Briefcase className="w-4 h-4 text-primary" />
+            Role/Position
+          </label>
+          <Input
+            type="text"
+            value={formData.role}
+            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+            className="bg-background/50 border-0 ring-1 ring-border focus:ring-2 focus:ring-primary/20 rounded-xl h-12"
+            placeholder="Software Engineer, Product Manager, etc."
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Website
-            </label>
-            <input
-              type="url"
-              value={formData.website}
-              onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-colors"
-              placeholder="https://company.com"
-            />
-          </div>
+        {/* Website */}
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <Globe className="w-4 h-4 text-primary" />
+            Website
+          </label>
+          <Input
+            type="url"
+            value={formData.website}
+            onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+            className="bg-background/50 border-0 ring-1 ring-border focus:ring-2 focus:ring-primary/20 rounded-xl h-12"
+            placeholder="https://company.com"
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Role/Position
-            </label>
-            <input
-              type="text"
-              value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-colors"
-              placeholder="Software Engineer, Product Manager, etc."
-            />
-          </div>
+        {/* LinkedIn */}
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-foreground">
+            <User className="w-4 h-4 text-primary" />
+            LinkedIn
+          </label>
+          <Input
+            type="text"
+            value={formData.linkedin}
+            onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+            className="bg-background/50 border-0 ring-1 ring-border focus:ring-2 focus:ring-primary/20 rounded-xl h-12"
+            placeholder="LinkedIn URL or username"
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              LinkedIn
-            </label>
-            <input
-              type="text"
-              value={formData.linkedin}
-              onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-colors"
-              placeholder="LinkedIn URL or username"
-            />
-          </div>
+        {/* Action Buttons */}
+        <div className="flex gap-4 pt-6">
+          <Button
+            type="submit"
+            className="flex-1 btn-modern gradient-primary text-white shadow-glow hover:shadow-glow-lg h-12 text-lg"
+            size="lg"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            Add Company
+          </Button>
+          <Button
+            type="button"
+            onClick={onCancel}
+            variant="outline"
+            className="px-8 h-12 border-border/50 hover:border-border"
+            size="lg"
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
 
-          <div className="flex gap-3 pt-2">
-            <button
-              type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
-            >
-              <Plus size={18} />
-              Add Company
-            </button>
-            <button
-              type="button"
-              onClick={onCancel}
-              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+      {/* Bottom accent */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 gradient-primary rounded-b-3xl opacity-50"></div>
     </div>
   );
 };
